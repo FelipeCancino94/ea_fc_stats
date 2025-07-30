@@ -5,3 +5,8 @@ export interface ButtonProps {
   disabled?: boolean;
   classes?: string;
 }
+
+export interface CardProps {
+  children: React.ReactNode;
+  classes?: string;
+}

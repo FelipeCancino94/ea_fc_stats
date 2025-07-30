@@ -1,28 +1,58 @@
-"use client"
-import Button from "@/components/Button/Button";
+"use client";
 
-import { neon } from '@neondatabase/serverless';
-
-async function getData() {
-  const baseUrl = process.env.DATABASE_URL
-  if (!baseUrl) {
-    throw new Error("DATABASE_URL no está definida en el entorno");
-  }
-  const sql = neon(baseUrl);
-  const result = await sql`SELECT * FROM seassons`;
-  return result;
-}
+import { useState, useEffect } from "react";
+import Card from "@/components/Card/Card";
+import Image from "next/image";
+import Loader from "@/components/Loader/Loader";
 
 export default function Home() {
-  const handleClick = () => {
-    getData();
-  };
+  
+  const [data, setData] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loader, setLoader] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("/api/seassons");
+        const json = await res.json();
+
+        if (!res.ok) {
+          throw new Error(json.error || "Error al obtener datos");
+        }
+        console.log(json);
+        setData(json);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoader(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        HOla Next
-        <Button label={'Click me!'} variant={'primary'} classes="px-4 py-2 text-white" onClick={ handleClick } />
+    <div>
+      <main className="grid grid-cols-3 gap-2 p-4">
+        <Card classes="p-4">
+          <Image src="./logo-milan.svg" alt="AC Milan" width={100} height={200}/>
+        </Card>
+        {
+          loader ? (
+            <Card classes="flex justify-center items-center">
+              <Loader />
+            </Card>
+          ) : (
+            data.map((item) => (
+              <Card classes="p-4 flex flex-col justify-center items-center" key={ item.id }>
+                <p>Temporada</p>
+                <p>{ item.seasson }</p>
+              </Card>
+            ))
+          )
+        }
+        
       </main>
     </div>
   );
