@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Card from "@/components/Card/Card";
 import Loader from "@/components/Loader/Loader";
 import './players.css';
+import PlayerForm from "@/components/PlayerForm/PlayerForm";
 
 export default function Players() {
 
@@ -34,29 +35,43 @@ export default function Players() {
   return (
     <main className="p-8">
       <h1 className="text-2xl font-bold mb-4 text-neutral-50">Payers</h1>
-      {
-        loader ? (
-          <Card classes="flex justify-center items-center">
-            <Loader />
-          </Card>
-        ) : (
-          data.map((player) => (
-            <Card classes="player-list p-4" key={ player.id }>
-              <div className="row-player grid">
-                <p className="text-center">{ player.position }</p>
-                <p className="text-center">{ player.name }</p>
-                <p className="text-center">{ player.games }</p>
-                <p className="text-center">{ player.goals }</p>
-                <p className="text-center">{ player.assists }</p>
-                <p className="text-center">{ player.unbeaten_matches }</p>
-                <p className="text-center">{ player.yellow_cards }</p>
-                <p className="text-center">{ player.red_cards }</p>
-                <p className="text-center">{ player.average }</p>
-              </div>
+      <div className="player-table">
+        {
+          loader ? (
+            <Card classes="flex justify-center items-center">
+              <Loader />
             </Card>
-          ))
-        )
-      }
+          ) : (
+            data.map((player) => (
+              <Card classes="player-list p-4" key={ player.id }>
+                <div className="row-info grid">
+                  <p className="text-center">Position</p>
+                  <p className="text-center">Player Name</p>
+                  <p className="text-center">Games</p>
+                  <p className="text-center">Goals</p>
+                  <p className="text-center">Assits</p>
+                  <p className="text-center">Unbeaten Matches</p>
+                  <p className="text-center">Yellow Cards</p>
+                  <p className="text-center">Red Cards</p>
+                  <p className="text-center">Average</p>
+                </div>
+                <div className="row-player grid">
+                  <p className="text-center">{ player.position }</p>
+                  <p className="text-center">{ player.name }</p>
+                  <p className="text-center">{ player.games }</p>
+                  <p className="text-center">{ player.goals }</p>
+                  <p className="text-center">{ player.assists }</p>
+                  <p className="text-center">{ player.unbeaten_matches }</p>
+                  <p className="text-center">{ player.yellow_cards }</p>
+                  <p className="text-center">{ player.red_cards }</p>
+                  <p className="text-center">{ player.average }</p>
+                </div>
+              </Card>
+            ))
+          )
+        }
+      </div>
+      <PlayerForm />
     </main>
   )
 }
