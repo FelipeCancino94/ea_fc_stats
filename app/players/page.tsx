@@ -82,26 +82,32 @@ export default function Players() {
                       <div className="row-player grid" onClick={() => toggleDetails(player.name.replace(' ', '-').toLowerCase())}>
                         <p className="text-center">{ player.position }</p>
                         <p className="text-center">{ player.name }</p>
-                        <p className="text-center">{ player.games }</p>
-                        <p className="text-center">{ player.goals }</p>
-                        <p className="text-center">{ player.assists }</p>
-                        <p className="text-center">{ player.unbeaten_matches }</p>
-                        <p className="text-center">{ player.yellow_cards }</p>
-                        <p className="text-center">{ player.red_cards }</p>
-                        <p className="text-center">{ player.average }</p>
+                        <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.games || 0), 0) }</p>
+                        <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.goals || 0), 0) }</p>
+                        <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.assists || 0), 0) }</p>
+                        <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.unbeaten_matches || 0), 0) }</p>
+                        <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.yellow_cards || 0), 0) }</p>
+                        <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.red_cards || 0), 0) }</p>
+                        <p className="text-center"> {(() => {
+                            const averages = player.seassons.map((s: any) => parseFloat(s.average) || 0);
+                            const total = averages.reduce((sum: number, val: number) => sum + val, 0);
+                            const count = averages.length;
+                            const avg = count > 0 ? (total / count).toFixed(2) : "0.00";
+                            return avg;
+                          })()}</p>
                       </div>
                       <Card classes={`p-4 card-seassons hidden data-player--${player.name.replace(' ', '-').toLowerCase()}`}>
                         {
                           player.seassons.map((seasson:any) => (
                             <div className="row-seasson grid" key={seasson.id}>
                               <p className="text-left">{ seasson.seasson }</p>
-                              <p className="text-right pr-2">{ seasson.games }</p>
-                              <p className="text-right pr-2">{ seasson.goals }</p>
-                              <p className="text-right pr-2">{ seasson.assists }</p>
-                              <p className="text-right pr-2">{ seasson.unbeaten_matches }</p>
-                              <p className="text-right pr-2">{ seasson.yellow_cards }</p>
-                              <p className="text-right pr-2">{ seasson.red_cards }</p>
-                              <p className="text-right pr-2">{ seasson.average }</p>
+                              <p className="text-center pl-8">{ seasson.games }</p>
+                              <p className="text-center pl-8">{ seasson.goals }</p>
+                              <p className="text-center pl-8">{ seasson.assists }</p>
+                              <p className="text-center pl-8">{ seasson.unbeaten_matches }</p>
+                              <p className="text-center pl-8">{ seasson.yellow_cards }</p>
+                              <p className="text-center pl-8">{ seasson.red_cards }</p>
+                              <p className="text-center pl-8">{ seasson.average }</p>
                             </div>
                           ))
                         }
