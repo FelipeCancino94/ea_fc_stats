@@ -1,4 +1,13 @@
 .player-list .row-player,
-.player-list .row-info  {
+.player-list .row-info {
   grid-template-columns: 50px 1fr repeat(7, 100px);
+}
+
+.player-list .row-seasson {
+  grid-template-columns: 1fr repeat(7, 100px);
+}
+
+.card-seassons {
+  width: 85%;
+  margin: 0 0 0 auto;
 }
