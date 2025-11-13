@@ -4,6 +4,7 @@ import Card from "@/components/Card/Card";
 import Loader from "@/components/Loader/Loader";
 import './players.css';
 import PlayerForm from "@/components/PlayerForm/PlayerForm";
+import Button from "@/components/Button/Button";
 
 export default function Players() {
 
@@ -36,6 +37,9 @@ export default function Players() {
           return acc;
         }, {} as Record<string, any>)
       )
+      const positionOrder = ["POR", "DFI", "DFC", "DFD", "MCD", "MC", "MCO", "MI", "MD", "EI", "ED", "DC"];
+      playerList.sort((a: any, b: any) => positionOrder.indexOf(a.position) - positionOrder.indexOf(b.position));
+
       setData(playerList);
       console.log(playerList);
     } catch (err) {
@@ -48,6 +52,28 @@ export default function Players() {
   function toggleDetails(playerName:string) {
     document.querySelector(`.data-player--${playerName}`)?.classList.toggle('hidden');
   }
+
+  function soldedPlayer(seassons:any) {
+    const playerSolded = seassons.find((key:any) => key.sellout === true);
+    if (playerSolded) {
+      return 'solded text-red-500';
+    }
+    return;
+  }
+
+  function colorByPosition(position:string) {
+    switch (position) {
+      case "POR":
+        return 'purple'
+    }
+  }
+
+  function toggleSoldedPlayers() {
+    const allPlayersSolded = document.querySelectorAll('.solded');
+    allPlayersSolded.forEach((player) => {
+      player.classList.toggle('hidden');
+    })
+  }
   
   useEffect(() => {
     fetchData();
@@ -55,7 +81,10 @@ export default function Players() {
 
   return (
     <main className="p-8">
-      <h1 className="text-2xl font-bold mb-4 text-neutral-50">Payers</h1>
+      <h1 className="text-2xl font-bold mb-4 text-neutral-50 flex justify-between">
+        Payers
+        <Button variant="primary" classes="px-4 py-2 text-white text-sm" label="Hide solded players" onClick={() => toggleSoldedPlayers()} />
+      </h1>
       <div className="player-table">
         {
           loader ? (
@@ -78,8 +107,8 @@ export default function Players() {
                 </div>
                 {
                   data.map((player) => (
-                    <div key={ player.name }>
-                      <div className="row-player grid" onClick={() => toggleDetails(player.name.replace(' ', '-').toLowerCase())}>
+                    <div key={ player.name } className={soldedPlayer(player.seassons)}>
+                      <div className={`row-player grid bg-${player.position}`} onClick={() => toggleDetails(player.name.replace(' ', '-').toLowerCase())}>
                         <p className="text-center">{ player.position }</p>
                         <p className="text-center">{ player.name }</p>
                         <p className="text-center">{ player.seassons.reduce((total: number, s: any) => total + (s.games || 0), 0) }</p>

@@ -16,6 +16,14 @@ export default function PlayerForm({ onPlayerCreated }: PlayerFormProps) {
   const [position, setPosition] = useState("POR");
   const [fromQuarry, setFromQuarry] = useState(false);
   const [potential, setPotential] = useState("-");
+  const [games, setGames] = useState(0);
+  const [goals, setGoals] = useState(0);
+  const [assists, setAssists] = useState(0);
+  const [unbeatenMatches, setUnbeatenMatches] = useState(0);
+  const [yellowCards, setYellowCards] = useState(0);
+  const [redCards, setRedCards] = useState(0);
+  const [average, setAverage] = useState("0.00");
+  const [sellout, setSellout] = useState(false);
 
   function toggleForm() {
     document.querySelector('.player-form-container')?.classList.toggle('hidden');
@@ -28,7 +36,7 @@ export default function PlayerForm({ onPlayerCreated }: PlayerFormProps) {
 
   async function createPlayer() {
 
-    const newPlayer = { name, seasson, position, from_quarry: fromQuarry, potential };
+    const newPlayer = { name, seasson, position, from_quarry: fromQuarry, potential, games, goals, assists, unbeatenMatches, yellowCards, redCards, average, sellout };
 
     try {
       const res = await fetch("/api/players", {
@@ -51,6 +59,14 @@ export default function PlayerForm({ onPlayerCreated }: PlayerFormProps) {
       setFromQuarry(false);
       setPotential("-");
       setShowPotentialInput(false);
+      setGames(0)
+      setGoals(0);
+      setAssists(0);
+      setUnbeatenMatches(0);
+      setYellowCards(0);
+      setRedCards(0);
+      setAverage("0.00");
+      setSellout(false);
 
       console.log(json);
     } catch (err) {
@@ -101,6 +117,38 @@ export default function PlayerForm({ onPlayerCreated }: PlayerFormProps) {
               </div>
             )
           }
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="games">Games</label>
+            <input type="number" id="games" name="games" className="border border-2 border-neutral-50 rounded-md ml-4" value={games} onChange={(e) => setGames(Number(e.target.value))} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="goals">Goals</label>
+            <input type="number" id="goals" name="goals" className="border border-2 border-neutral-50 rounded-md ml-4" value={goals} onChange={(e) => setGoals(Number(e.target.value))} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="assists">Assists</label>
+            <input type="number" id="assists" name="assists" className="border border-2 border-neutral-50 rounded-md ml-4" value={assists} onChange={(e) => setAssists(Number(e.target.value))} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="unbeaten_matches">Unbeaten Matches</label>
+            <input type="number" id="unbeaten_matches" name="unbeaten_matches" className="border border-2 border-neutral-50 rounded-md ml-4" value={unbeatenMatches} onChange={(e) => setUnbeatenMatches(Number(e.target.value))} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="yellow_cards">Yellow Cards</label>
+            <input type="number" id="yellow_cards" name="yellow_cards" className="border border-2 border-neutral-50 rounded-md ml-4" value={yellowCards} onChange={(e) => setYellowCards(Number(e.target.value))} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="red_cards">Red Cards</label>
+            <input type="number" id="red_cards" name="red_cards" className="border border-2 border-neutral-50 rounded-md ml-4" value={redCards} onChange={(e) => setRedCards(Number(e.target.value))} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="average">Average</label>
+            <input type="text" id="average" name="average" className="border border-2 border-neutral-50 rounded-md ml-4" value={average} onChange={(e) => setAverage(e.target.value)} />
+          </div>
+          <div className="form-group flex justify-between pb-4">
+            <label htmlFor="sellout">Sellout</label>
+            <input type="checkbox" id="sellout" name="sellout" className="border border-2 border-neutral-50 rounded-md ml-4" checked={sellout} onChange={(e) => setSellout(e.target.checked)} />
+          </div>
           <div className="form-group flex justify-end">
             <Button variant="primary" label="Save Player" classes="px-4 py-2" onClick={createPlayer} />
           </div>

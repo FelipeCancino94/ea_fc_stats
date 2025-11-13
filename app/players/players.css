@@ -11,3 +11,51 @@
   width: 85%;
   margin: 0 0 0 auto;
 }
+
+.bg-POR {
+  background-color: rgba(173, 70, 255, .3);
+}
+
+.bg-DFI {
+  background-color: rgba(253, 199, 0, .3);
+}
+
+.bg-DFD {
+  background-color: rgba(208, 135, 0, .3);
+}
+
+.bg-DFC {
+  background-color: rgba(254, 154, 0, .3);
+}
+
+.bg-MCD {
+  background-color: rgba(0, 201, 80, .3);
+}
+
+.bg-MC {
+  background-color: rgba(0, 184, 219, .3);
+}
+
+.bg-MI {
+  background-color: rgba(230, 0, 118, .3);
+}
+
+.bg-MD {
+  background-color: rgba(255, 99, 126, .3);
+}
+
+.bg-MCO {
+  background-color: rgba(251, 44, 54, .3);
+}
+
+.bg-EI {
+  background-color: rgba(0, 211, 242, .3);
+}
+
+.bg-ED {
+  background-color: rgba(20, 71, 230, .3);
+}
+
+.bg-DC {
+  background-color: rgba(6, 223, 114, .3);
+}

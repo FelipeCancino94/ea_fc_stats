@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { name, from_quarry, potential, seasson, position } = body;
+    const { name, from_quarry, potential, seasson, position, games, goals, assists, unbeatenMatches, yellowCards, redCards, average, sellout } = body;
 
     if (!name || !seasson) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const sql = neon(baseUrl);
     const result = await sql`
       INSERT INTO players (name, games, goals, assists, unbeaten_matches, yellow_cards, red_cards, average, from_quarry, potential, sellout, seasson, position)
-      VALUES (${name}, 0, 0, 0, 0, 0, 0, 0.00, ${ from_quarry }, ${ potential }, false, ${ seasson }, ${ position })
+      VALUES (${name}, ${games}, ${goals}, ${assists}, ${unbeatenMatches}, ${yellowCards}, ${redCards}, ${average}, ${ from_quarry }, ${ potential }, ${sellout}, ${ seasson }, ${ position })
       RETURNING *;
     `;
 
