@@ -12,7 +12,7 @@ export default function PlayerForm({ onPlayerCreated }: PlayerFormProps) {
   const [showPotentialInput, setShowPotentialInput] = useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false);
   const [name, setName] = useState("");
-  const [seasson, setSeasson] = useState("");
+  const [seasson, setSeasson] = useState("2029-2030");
   const [position, setPosition] = useState("POR");
   const [fromQuarry, setFromQuarry] = useState(false);
   const [potential, setPotential] = useState("-");
@@ -55,7 +55,7 @@ export default function PlayerForm({ onPlayerCreated }: PlayerFormProps) {
       if (onPlayerCreated) onPlayerCreated();
 
       setName("");
-      setSeasson("");
+      setSeasson("2029-2030");
       setFromQuarry(false);
       setPotential("-");
       setShowPotentialInput(false);
